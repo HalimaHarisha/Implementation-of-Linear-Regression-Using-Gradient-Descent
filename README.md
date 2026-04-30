@@ -9,10 +9,10 @@ To write a program to predict the profit of a city using the linear regression m
 
 ## Algorithm
 1.Initialize parameters (slope and intercept) with small values and choose a learning rate.
+
 2.Compute predicted profit using the linear equation for all training data points.
 
 3.Calculate the cost (error) and update parameters using gradient descent to minimize the error.
-
 
 4.Repeat the process until convergence and use the final model to predict profit. 
 
