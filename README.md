@@ -8,13 +8,27 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1.Initialize parameters (slope and intercept) with small values and choose a learning rate.
+1.Import NumPy, Pandas, and StandardScaler libraries for numerical operations, dataset handling, and feature scaling.
 
-2.Compute predicted profit using the linear equation for all training data points.
+2.Define a linear regression function that adds a bias column, initializes parameters, and updates them using gradient descent.
 
-3.Calculate the cost (error) and update parameters using gradient descent to minimize the error.
+3.Read the 50_Startups.csv dataset and display the initial records.
 
-4.Repeat the process until convergence and use the final model to predict profit. 
+4.Extract the independent variables excluding the categorical column and convert them into floating-point values.
+
+5.Extract the dependent variable and reshape it into a column vector.
+
+6.Apply standard scaling to both the independent and dependent variables.
+
+7.Pass the scaled independent and dependent variables to the gradient descent function to compute optimal parameters.
+
+8.Provide new input data and apply the same scaling technique to it.
+
+9.Compute the predicted output using the learned parameters.
+
+10.Convert the predicted value back to its original scale using inverse transformation.
+
+11.Display the final predicted value.
 
 ## Program:
 ```
@@ -24,35 +38,49 @@ Developed by: A.Halima Harisha
 RegisterNumber: 212224040094
 */
 import numpy as np
-import matplotlib.pyplot as plt
-X = np.array([1, 2, 3, 4, 5], dtype=float)
-y = np.array([2, 4, 5, 4, 5], dtype=float)
-m = 0  # slope
-b = 0  # intercept
-learning_rate = 0.01
-epochs = 1000
-n = len(X)
-for i in range(epochs):
-    y_pred = m * X + b
-    dm = (-2/n) * np.sum(X * (y - y_pred))
-    db = (-2/n) * np.sum(y - y_pred)
-    m = m - learning_rate * dm
-    b = b - learning_rate * db
-print("Slope (m):", m)
-print("Intercept (b):", b)
-y_pred = m * X + b
-plt.scatter(X, y, color='blue', label='Actual Data')
-plt.plot(X, y_pred, color='red', label='Regression Line')
-plt.xlabel("X")
-plt.ylabel("y")
-plt.legend()
-plt.show()
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+def linear_regression(X1,y,learning_rate = 0.1, num_iters = 1000):
+    X = np.c_[np.ones(len(X1)),X1]
+    theta = np.zeros(X.shape[1]).reshape(-1,1)
+    
+    for _ in range(num_iters):
+        predictions = (X).dot(theta).reshape(-1,1)
+        errors=(predictions - y ).reshape(-1,1)
+        theta -= learning_rate*(1/len(X1))*X.T.dot(errors)
+        return theta
+data=pd.read_csv("50_Startups.csv")
+print(data.head())
+print("\n")
+X=(data.iloc[1:,:-2].values)
+X1=X.astype(float)
+scaler=StandardScaler()
+y=(data.iloc[1:,-1].values).reshape(-1,1)
+X1_Scaled=scaler.fit_transform(X1)
+Y1_Scaled=scaler.fit_transform(y)
+print(X)
+print("\n")
+print(X1_Scaled)
+print("\n")
+theta= linear_regression(X1_Scaled,Y1_Scaled)
+new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled=scaler.fit_transform(new_data)
+prediction=np.dot(np.append(1,new_Scaled),theta)
+prediction=prediction.reshape(-1,1)
+pre=scaler.inverse_transform(prediction)
+print(prediction)
+print(f"Predicted value: {pre}")
+
+
+
 ```
 
 ## Output:
-![linear regression using gradient descent](sam.png)
-<img width="1035" height="862" alt="image" src="https://github.com/user-attachments/assets/b8ff05f1-43f6-4acf-8896-b3030e8c641d" />
 
+<img width="805" height="437" alt="image" src="https://github.com/user-attachments/assets/0197b93c-57d4-4236-8e90-08c0c4bc8baf" />
+
+# Resut:
+Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
