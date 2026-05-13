@@ -79,8 +79,7 @@ print(f"Predicted value: {pre}")
 
 <img width="805" height="437" alt="image" src="https://github.com/user-attachments/assets/0197b93c-57d4-4236-8e90-08c0c4bc8baf" />
 
-# Resut:
-Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
+
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
